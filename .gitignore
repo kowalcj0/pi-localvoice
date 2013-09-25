@@ -1,0 +1,20 @@
+.DS_Store
+*.out
+*.jtl
+*.log
+*.tmp
+*.swp
+*.wav
+*.ogg
+*.zip
+*.png
+*.html
+.idea
+*.pyc
+0
+# uncomment them to ignore Aptana3 project files
+# .project
+# .pydevproject
+
+#gedit
+*.*~

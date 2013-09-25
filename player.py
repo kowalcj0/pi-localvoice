@@ -82,7 +82,7 @@ class Player():
     def playMp3(self, filename):
         try:
            with open('%s/audio/%s' % (self.pwd, filename)): 
-               os.system("mpg321 -q -g 5 %s/audio/%s" % (self.pwd,filename))
+               os.system("mpg321 -q -g 40 %s/audio/%s" % (self.pwd,filename))
         except IOError:
             print "Couldn't find audio file: ./audio/%s" % filename
 
