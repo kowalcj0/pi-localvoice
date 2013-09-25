@@ -9,6 +9,7 @@ class LVService():
 
     def __init__(self):
         self.lv=LV()
+        self.lv.adminResetToNull()
         if self.refreshSchedule():
             # setup the player using custom callback functions
             self.player=Player(TILT_SWITCH_CALLBACK=self.tiltSwitchCallback,

@@ -23,6 +23,7 @@ class LV:
         self.RETR_CTX="/api/players/%s/retrieved"  % self.PID
         self.SCHED_URL="%s%s" % (self.SERVER,self.SCHED_CTX)
         self.RETR_URL="%s%s" % (self.SERVER,self.RETR_CTX)
+        self.RESET_2NULL_URL="%s%s" % (self.SERVER,"/debug/debug_processor.php?action=reset_to_null&value=0")
 
     def getSchedule(self):
         """Gets the schedule.
@@ -117,18 +118,33 @@ class LV:
         """
         Makes an request that resets all the schedules to NULL
         """
-        pass
+        try:
+            print "Resetting schedule to null"
+            opener = build_opener()
+            req = urlopen(self.RESET_2NULL_URL)
+            if (req.getcode() != 200):
+                print "Something's wrong! Resp.code is %s" % req.getcode()
+        #handle errors
+        except HTTPError, e:
+            print "HTTP Error:", e.code, self.RESET_2NULL_URL
+        except URLError, e:
+            print "URL Error:", e.reason, self.RESET_2NULL_URL
+            
+
 
 if __name__ == "__main__":
     lv=LV(SERVER="http://www.ht0004.mobi", PID="P137960410446628")
     s=lv.getSchedule()
+    while not s:
+        print "I've got nothing to do because I've received an empty schedule!"
+        lv.adminResetToNull()
+        s=lv.getSchedule()
     if s:
         print "Got a schedule containing: %d item(s)" % len(s['schedule'])
         u=lv.getDlUrls(s)
         h=lv.getHighestBid(s)
+        lv.confirmScheduleRetrieval()
         print h
         #print "List of audio URLs to download \n %s \n" % u
         #if lv.dlAllFiles(u):
             #lv.confirmScheduleRetrieval()
-    else:
-        print "I've got nothing to do because I've received an empty schedule!"

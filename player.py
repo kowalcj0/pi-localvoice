@@ -48,6 +48,12 @@ class Player():
         GPIO.add_event_detect(self.PIN_TILT_SWITCH, GPIO.RISING, bouncetime=500)
         GPIO.add_event_callback(self.PIN_TILT_SWITCH, self.TILT_SWITCH_CALLBACK, bouncetime=500)
         #GPIO.add_event_callback(self.PIN_TILT_SWITCH, self.tiltSwitchCallBack, bouncetime=500)
+        # turn on the LEDs for 1 seconds to indicated that player booted up
+        self.toggleGreenLed()
+        self.toggleRedLed()
+        time.sleep(1)
+        self.toggleGreenLed()
+        self.toggleRedLed()
         # wait until Ctrl+C is pressed
         signal.pause()
 
